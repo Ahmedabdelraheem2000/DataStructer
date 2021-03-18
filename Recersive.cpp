@@ -1,30 +1,35 @@
 #include <iostream>
 #include <algorithm>
 #include <string.h>
+#include <string>
 using namespace std;
-int main()
-{	
-	string str;
-	cin >> str;
-	sort(str.begin(), str.end());
-	int xx = str.size(),c=0,d;
-	d = str.size();
-	string b = str;
-	cout << str << endl;
-	while (d!=0) {
-		for (int x = xx - 1; x > 1; x--) {
-			string a;
-			swap(str[x - 1], str[x]);
+string b, a;  int c=0; 
+
+void prem(string str) {
+	int s = 0; int z = 0;
+	if (z <str.size()) {
+		
+		for (int x = str.size()-1; x > 1; x--) {
+			swap(str[x], str[x - 1]);
 			if (str == b)break;
-			else cout << str << endl;
+			cout << str << endl;
 		}
-		if (str == b) {
-			swap(str[0], str[c+1]);
-			b = str;
-			c++;
-			d--;
-			if (d == 0)break;
-			cout << str<<endl;
-		}	
 	}
+		if (str == b) {
+			swap(b[0], b[c + 1]);
+			c++;
+			z++;
+			str = b;
+			if (c == str.size())return;
+			cout << str << endl;
+		}
+		
+		return prem(str);
+}
+
+int main()
+{
+	 cin>>a ;
+	b = a;
+	prem(a);
 }
