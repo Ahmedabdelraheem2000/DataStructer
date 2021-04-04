@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+struct node {
+	char val;
+	node* next;
+};
+class list {
+	node* head;
+	node* last;
+	node* count;
+public:
+	list() {
+		head = NULL;
+		last = NULL;
+		count = NULL;
+	}
+
+	void add(char val1) {
+		node* newnode = new node;
+		if (head == NULL) {
+			newnode->val = val1;
+			newnode->next = NULL;
+			head =last=count= newnode;
+		}
+		else {
+			newnode->val = val1;
+			newnode->next = NULL;
+			last->next = newnode;
+			last = last->next;
+		}
+
+	}
+	void print() {
+
+		while (count != NULL) {
+			cout << count->val<<endl;
+			count =	count->next;
+		}
+		count = head;
+	}
+};
+int main() {
+	list l;
+	string a = "ahmed"; int c= 0;
+	while (c != a.length()) {
+		l.add(a[c]);
+		c++;
+	}
+	l.print();
+}
