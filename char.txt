@@ -41,7 +41,8 @@ public:
 };
 int main() {
 	list l;
-	string a = "ahmed"; int c= 0;
+	string a ; int c= 0;
+	cin >> a;
 	while (c != a.length()) {
 		l.add(a[c]);
 		c++;
