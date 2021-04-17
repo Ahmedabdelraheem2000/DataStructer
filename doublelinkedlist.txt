@@ -1,0 +1,245 @@
+#include <iostream>
+using namespace std;
+class double_linked {
+private:
+	struct node {
+		int data;
+		node* next;
+		node* prev;
+	};
+	node* head;
+	node* end;
+	node* count;
+	node*bef;
+	node* nex;
+	node* temp;
+	node* temp1;
+
+public:
+	double_linked() { head = NULL; }
+	void add_front(int val) {
+		node* new_ptr = new node;
+		if (head == NULL) {
+			(*new_ptr).data = val;
+			new_ptr->next = NULL;
+			new_ptr->prev = NULL;
+			head = end=new_ptr;
+		}
+		else {
+			new_ptr->data = val;
+			new_ptr->next = head;
+			head->prev = new_ptr;
+			new_ptr->prev = NULL;
+			head = new_ptr;
+		
+		}
+	}
+	void add_end(int val) {
+		node* new_ptr = new node;
+		
+
+		if (head == NULL) {
+			(*new_ptr).data = val;
+			new_ptr->next = NULL;
+			new_ptr->prev = NULL;
+			head =end= new_ptr;
+		}
+		else {
+			new_ptr->data = val;
+			new_ptr->next = NULL;
+			new_ptr->prev = end;
+			end->next = new_ptr;
+			end = new_ptr;
+		}
+	}
+	void add_before(int pos, int val) {
+		node* prev;
+
+		count = head;
+		node* new_ptr = new node;
+
+		new_ptr->data = val;
+		while (count != NULL) {
+			if (count->data == pos) {
+				if (count->prev == NULL) {
+					new_ptr->next = count;
+					count->prev = new_ptr;
+					head = new_ptr;
+					break;
+				}
+				prev = count->prev;
+				new_ptr->next = count;
+				new_ptr->prev = count->prev;
+				prev->next = new_ptr;
+				count->prev = new_ptr;
+				break;
+			}
+			count = count->next;
+		}
+	}
+	void add_after(int pos, int val) {
+		count = head;
+		node* nex;
+		node* new_ptr = new node;
+		new_ptr->data = val;
+		while (count != NULL) {
+			if (count->data == pos) {
+				if (count->next == NULL) {
+					new_ptr->prev = count;
+					count->next = new_ptr;
+					new_ptr->next = NULL;
+					break;
+				}
+				nex = count->next;
+				new_ptr->prev = count;
+				new_ptr->next = nex;
+				nex->prev = new_ptr;
+				count->next = new_ptr;
+				break;
+			}
+			
+			count = count->next;
+		}
+	}
+	void del_front() {
+		if (head == NULL) {
+			head==NULL;
+		}
+		else {
+			count = head;
+			head = head->next;
+			free(count);		
+		}
+	}
+	void del_end() {
+		if (head == NULL) {
+			return;
+		}
+		else {
+			count = end;
+			end = end->prev;
+			end->next = NULL;
+			free(count);
+			
+		}
+	}
+	void del_Node(int pos) {
+		
+			count = head;
+			while (count != NULL) {
+				
+				if (count->data == pos&&count->next!=NULL&&count->prev!=NULL) {
+					count->prev->next = count->next;
+					count->next->prev = count->prev;
+					free(count);
+					break;
+				}
+				else if (count->next == NULL && count->prev != NULL && count->data == pos) {
+					end = end->prev;
+					end->next = NULL;
+					free(count);
+					break;
+				}
+				else if (count->data == pos && count->prev == NULL && count->next != NULL) {
+					head = head->next;
+					head->prev = NULL;
+					free(count);
+					break;
+				}
+				if (pos == count->data && count == head&& count==end) {
+					free(count);
+					head = end = NULL;
+					break;
+				}
+				count = count->next;
+			}
+		}
+	void del_before(int pos) {
+		count = head;
+		while (count != NULL) {
+
+			if (pos == count->data) {
+				bef = count->prev;
+				 if (bef == head) {
+					head = head->next;
+					head->prev = NULL;
+					free(bef);
+					break;
+				}
+			else if (bef == NULL)return;
+			else if (bef->prev!=NULL&&bef!=NULL) {
+					bef->prev->next = count;
+					count->prev = bef->prev;
+					free(bef);
+					break;
+				}
+			}
+			count = count->next;
+		}
+	
+	}
+	void del_after(int pos) {
+		count = head;
+		while (count != NULL) {
+			if (count->data == pos) {
+				nex = count->next;
+			 if (nex == NULL)return;
+				else if (nex == end) {
+					end = end->prev;
+					end->next = NULL;
+					free(nex);
+					break;
+				}
+				else	if (nex->next != NULL) {
+					count->next = nex->next;
+					nex->next->prev = count;
+					free(nex);
+					break;
+				}
+			
+				}
+			count = count->next;
+			}
+			
+		}
+	void del_all_node() {
+		while (head != NULL) {
+			count = head;
+			head = head->next;
+			free(count);
+		}
+	}
+	void revarse() {
+		temp = end;
+		temp1 = head;
+
+		while (temp !=temp1&&temp1->prev!=temp ) {
+			swap(temp1->data, temp->data);
+			
+			temp = temp->prev;
+			temp1 = temp1->next;
+			
+		}
+	}
+	void show() {
+		count = head;
+		while (count != NULL) {
+			cout << count->data<<" ";
+			count = count->next;
+		}
+
+	}
+};
+int main()
+{
+	double_linked d1;
+	d1.add_end(5);
+	d1.add_end(4);
+	d1.add_end(3);
+	d1.add_end(7);
+	d1.revarse();
+	d1.add_after(7, 9);
+	d1.add_front(8);
+	d1.revarse();
+	d1.show();
+}
