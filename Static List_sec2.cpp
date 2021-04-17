@@ -5,12 +5,12 @@ using namespace std;
 
 int const cap = 10;//	Capacity List
 class list {
-	
+
 	int size;//		list Size
 	int arr[cap];
-	
+
 public:
-	list() {size = 0;}//	Constructor
+	list() { size = 0; }//	Constructor
 	//		8) Methods List 	//
 	bool set(int index, int val);//	1)Change Elemnts
 	int get(int index);//	2)Return Value By Index
@@ -22,20 +22,20 @@ public:
 	void Start_Program();//		8)Option
 };
 int list::get(int index) {
-	int ind = index-1;
+	int ind = index - 1;
 	if (ind >= cap || ind < 0 || ind >= size)
 	{
-		cout << "Not Found " ;
+		cout << "Not Found ";
 		return -1;
 	}
-	 return arr[ind];
+	return arr[ind];
 }
 
 bool list::insert(int index, int val) {
 	int ind = index - 1;
-	if (ind >= cap || ind<0 || ind>=size)return false;
+	if (ind >= cap || ind < 0 || ind >= size)return false;
 	for (int pos = size - 1; pos >= ind; pos--)
-		arr[pos+1] = arr[pos ];
+		arr[pos + 1] = arr[pos];
 	arr[ind] = val;
 	size++;
 	return true;
@@ -72,56 +72,61 @@ void list::Start_Program() {
 	cout << endl << "5)Size List\n6)Show The Elements\n7)Get The Elemnt\n8)Exit Program\n";
 	cout << "\nEnter The Number : ";
 	class list l1;
-	int ind, val;
-	char ele ;
+	int ind, val=0;
+	char ele;
 	bool check = false;
 
-		while (check !=true) {
-			cin >> ele;
-			
-			if (ele == '8' ) {
+	while (check != true) {
 
-				check = true;
-			}
-			else if (ele == '1') {
-				cout << "Enter The Elements : ";
-				cin >> val;
-				l1.pushpack(val);
-			}
-			else if (ele == '2') {
-				cout << "Enter The endex : ";
-				cin >> ind;
-				l1.remove(ind);
-			}
-			else if (ele == '3') {
-				cout << "Enter The index : ";
-				cin >> ind;
-				cout << "Enter The Elemnts : ";
-				cin >> val;
-				l1.set(ind, val);
-			}
-			else if (ele == '4') {
-				cout << "Enter The index : ";
-				cin >> ind;
-				cout << "Enter The Elemnts : ";
-				cin >> val;
-				l1.insert(ind, val);
-			}
-			else if (ele == '5')cout << l1.Size();
-			else if (ele == '6') l1.print();
-			else if (ele == '7') {
-				cout << "Enter The index : ";
-				cin >> ind;
-				cout << l1.get(ind);
-			}
-			if (ele != '8' )
-			cout << "\nEnter The Number : ";
+		cin >> ele;
+		
+		if (ele == '8') {
+
+			check = true;
+		}
+		else if (ele == '1') {
+			cout << "Enter The Elements : ";
+			cin >> val; 
+			l1.pushpack(val);
+			
 
 		}
+		else if (ele == '2') {
+			cout << "Enter The endex : ";
+			cin >> ind;
+			l1.remove(ind);
+		}
+		else if (ele == '3') {
+			cout << "Enter The index : ";
+			cin >> ind;
+			cout << "Enter The Elemnts : ";
+			cin >> val;
+			l1.set(ind, val);
+		}
+		else if (ele == '4') {
+			cout << "Enter The index : ";
+			cin >> ind;
+			cout << "Enter The Elemnts : ";
+			cin >> val;
+			l1.insert(ind, val);
+		}
+		else if (ele == '5')cout << l1.Size();
+		else if (ele == '6') l1.print();
+		else if (ele == '7') {
+			cout << "Enter The index : ";
+			cin >> ind;
+			cout << l1.get(ind);
+		}
+		
+		if (ele != '8')
+			cout << "\nEnter The Number : ";
+		if (val < 1 || val>9)break;
 	}
+}
 int main()
-{	
-	
+{
+
 	list l2;
 	l2.Start_Program();
+	
 }
