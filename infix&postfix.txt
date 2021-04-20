@@ -1,0 +1,148 @@
+#include<iostream>
+using namespace std;
+template<class t>
+class stack {
+	struct node
+	{
+		node* next;
+		t data;
+	};
+public:
+	node* top = NULL;
+	node* ptr;
+	bool isempty() {
+		return top == NULL;
+	}
+	void push(t val) {
+		node* new_node = new node;
+		if (top == NULL) {
+			new_node->data = val;
+			new_node->next = NULL;
+			top = new_node;
+		}
+		else {
+			ptr = new_node;
+			new_node->data = val;
+			new_node->next = top;
+			top = ptr;
+		}
+	}
+	t top_val() {
+		if (isempty() == true) {
+			cout << "\nThe stack is empty ";
+			return -1;
+		}
+		else return top->data;
+
+	}
+	void pop() {
+		if (isempty())return;
+		ptr = top;
+		top = top->next;
+		ptr = NULL;
+		free(ptr);
+	}
+};
+char oper(char c) {
+	if (c == '-')return 1;
+	else if (c == '+')return 1;
+	else if (c == '*')return 2;
+	else if (c == '/')return 2;
+	else return 0;
+}
+string infix_conv_postfix(string op) {
+	int c = 0, d = 0;
+	string result;
+	stack<char> st;
+	for (int x = 0; x < op.size(); x++) {
+		if (isdigit(op[x])) {
+
+			result += op[x];
+		}
+		else if (op[x] == '+' || op[x] == '-' || op[x] == '*' || op[x] == '/') {
+			while (!st.isempty() && oper(op[x]) <= oper(st.top_val())) {
+				result += st.top_val();
+				st.pop();
+			}
+			st.push(op[x]);
+		}
+		else if (op[x] == '(' || op[x] == '[' || op[x] == '{') {
+			st.push(op[x]);
+		}
+		else if (op[x] == ')' || op[x] == ']' || op[x] == '}') {
+			if (op[x] == ')') {
+				while (!st.isempty() && st.top_val() != '(') {
+
+					result += st.top_val();
+					st.pop();
+
+				}
+				st.pop();
+			}
+			else if (op[x] == ']') {
+				while (!st.isempty() && st.top_val() != '[') {
+
+					result += st.top_val();
+					st.pop();
+				}
+				st.pop();
+			}
+			else if (op[x] == '}') {
+				while (!st.isempty() && st.top_val() != '{') {
+
+					result += st.top_val();
+					st.pop();
+				}
+				st.pop();
+			}
+
+		}
+
+	}
+
+	if (!st.isempty()) {
+		while (!st.isempty()) {
+			if (st.top_val() == '+' || st.top_val() == '-' || st.top_val() == '*' || st.top_val() == '/') {
+				result += st.top_val();
+				st.pop();
+			}
+			else {
+				c++;
+				cout << "MATH ERROR ";
+				break;
+			}
+		}
+	}
+
+	if (c > 0)return "-1";
+	else return result;
+}
+double ret(double last, double brelast, char op) {
+	if (op == '+')return brelast + last;
+	else if (op == '-')return brelast - last;
+	else if (op == '*')return brelast * last;
+	else if (op == '/')return brelast / last;
+}
+double cal(string op) {
+	stack<double> st; double a, b;
+	for (int x = 0; x < op.size(); x++) {
+		if (isdigit(op[x])) {
+			st.push(op[x] - '0');
+		}
+		if (!isdigit(op[x])) {
+			a = st.top_val();
+			st.pop();
+			b = st.top_val();
+			st.pop();
+			st.push(ret(a, b, op[x]));
+		}
+	}
+	return st.top_val();
+}
+int main() {
+	string s;
+	cin >> s;
+
+	cout << "infix_conv_postfix : "<<infix_conv_postfix(s) << endl;
+	cout << "Result : "<<cal(infix_conv_postfix(s));
+}
